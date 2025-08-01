@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="jewelryApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Jewelry Designer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+</head>
+<body ng-controller="JewelryController as vm">
+
+    <div class="container">
+        <h1>Design Your Custom Jewelry</h1>
+
+        {% raw %} <div class="form-group">
+            <label for="jewelryType">Type of Jewelry:</label>
+            <select id="jewelryType" ng-model="vm.design.jewelry_type">
+                <option value="">-- Select --</option>
+                <option value="ring">Ring</option>
+                <option value="bracelet">Bracelet</option>
+                <option value="pendant">Pendant</option>
+                <option value="necklace">Necklace</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="metalType">Type of Metal:</label>
+            <select id="metalType" ng-model="vm.design.metal_type">
+                <option value="">-- Select --</option>
+                <option value="yellow gold">Yellow Gold</option>
+                <option value="white gold">White Gold</option>
+                <option value="rose gold">Rose Gold</option>
+                <option value="platinum">Platinum</option>
+                <option value="silver">Silver</option>
+                <option value="two tone">Two Tone</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="stoneType">Type of Stone:</label>
+            <select id="stoneType" ng-model="vm.design.stone_type">
+                <option value="">-- Select --</option>
+                <option value="diamond">Diamond</option>
+                <option value="ruby">Ruby</option>
+                <option value="emerald">Emerald</option>
+                <option value="sapphire">Sapphire</option>
+                <option value="topaz">Topaz</option>
+                <option value="amethyst">Amethyst</option>
+                <option value="pearl">Pearl</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>For:</label>
+            <input type="radio" id="men" ng-model="vm.design.gender" value="men">
+            <label for="men">Men</label>
+            <input type="radio" id="women" ng-model="vm.design.gender" value="women">
+            <label for="women">Women</label>
+            <input type="radio" id="unisex" ng-model="vm.design.gender" value="unisex">
+            <label for="unisex">Unisex</label>
+        </div>
+
+        <div class="form-group">
+            <label for="description">Further Description (e.g., "thin metal diamonds on the side", "vintage style"):</label>
+            <textarea id="description" ng-model="vm.design.description" rows="4" placeholder="Enter additional details..."></textarea>
+        </div>
+
+        <button ng-click="vm.generateImages()" ng-disabled="vm.isLoading">
+            <span ng-if="!vm.isLoading">Generate Images</span>
+            <span ng-if="vm.isLoading">Generating... Please wait</span>
+        </button>
+
+        <div ng-if="vm.errorMessage" class="error-message">
+            {{ vm.errorMessage }}
+        </div>
+
+        <div class="image-gallery" ng-if="vm.images.length > 0">
+            <h2>Your Custom Designs:</h2>
+            <div class="image-grid">
+                <div class="image-item" ng-repeat="image in vm.images track by $index">
+                    <img ng-src="{{ image }}" alt="Generated Jewelry Design {{ $index + 1 }}">
+                </div>
+            </div>
+        </div>
+
+        {% endraw %} </div>
+
+</body>
+</html>

@@ -1,0 +1,8 @@
+venv/
+*.pyc
+*.log
+__pycache__/
+.env # Do NOT copy .env into the image for security. We'll handle it via docker-compose.
+.DS_Store
+*.swp
+node_modules/ # If you had node dependencies

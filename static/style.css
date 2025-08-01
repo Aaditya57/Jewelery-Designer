@@ -1,0 +1,340 @@
+body {
+    font-family: Calibri, Candara, Segoe, "Segoe UI", Optima, Arial, sans-serif;
+    margin: 0;
+    padding: 0 10px 10px 10px; /* Reduced padding */
+    background-color: #f4f4f4;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    font-size: 1.05em;
+}
+
+.container {
+    background-color: #fff;
+    padding: 5px 20px 20px 20px; /* Reduced padding */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 900px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* NEW: Styles for Enhance Prompt Checkbox alignment */
+.enhance-prompt-checkbox {
+    display: flex; /* Use flexbox for alignment */
+    justify-content: flex-start; /* CHANGED: Aligns items to the start (left) */
+    align-items: center; /* Vertically centers text and checkbox */
+    /* width: 100%; REMOVED: Let it size to content or be controlled by parent */
+    /* padding-right: 5px; REMOVED: Not needed if width is not 100% */
+}
+
+.enhance-prompt-checkbox label {
+    margin-right: 8px; /* Adjusted: Small space between text and checkbox */
+    white-space: nowrap; /* Prevents the text from wrapping */
+    margin-bottom: 0;
+    flex-shrink: 0;
+}
+
+.enhance-prompt-checkbox input[type="checkbox"] {
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+/* ... (rest of your existing styles) ... */
+
+
+
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 8px; /* Reduced margin */
+    font-size: 2em;
+}
+
+h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 15px; /* Reduced margin */
+    font-size: 1.5em;
+}
+
+h3 {
+    font-size: 1.2em;
+    margin-top: 15px; /* Reduced margin */
+    margin-bottom: 5px; /* Reduced margin */
+    color: #555;
+}
+
+.header-line {
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 10px; /* Reduced margin */
+}
+
+.main-content {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Reduced gap */
+    margin-top: 5px;
+}
+
+.left-panel, .right-panel {
+    min-width: unset;
+    padding: 15px; /* Reduced padding */
+    border: 1px solid #eee;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+    background-color: #fcfcfc;
+}
+
+.left-panel {
+    display: flex;
+    flex-direction: column;
+}
+
+.dropdowns-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; /* Reduced gap */
+    margin-bottom: 10px; /* Reduced margin */
+}
+
+.dropdowns-row .form-group {
+    flex: 1;
+    min-width: 150px;
+    margin-bottom: 0;
+}
+
+.model-size-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; /* Reduced gap */
+    margin-bottom: 10px; /* Reduced margin */
+}
+
+.model-size-row .form-group {
+    flex: 1;
+    min-width: 150px;
+    margin-bottom: 0;
+}
+
+
+.form-group {
+    margin-bottom: 10px; /* Reduced margin */
+    white-space: nowrap;
+}
+
+label {
+    display: block;
+    margin-bottom: 3px;
+    font-weight: bold;
+    font-size: 0.9em;
+}
+
+select, textarea, input[type="text"] { /* ADDED input[type="text"] here */
+    width: calc(100% - 10px); /* This makes it fill available width */
+    padding: 6px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 0.9em;
+    box-sizing: border-box;
+}
+
+input[type="radio"] {
+    margin-right: 5px;
+}
+
+input[type="radio"] + label {
+    display: inline-block;
+    margin-right: 15px;
+    font-weight: normal;
+    font-size: 0.9em;
+}
+
+.quantity-control {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+    background-color: #fff;
+    padding: 0;
+    width: 120px;
+}
+
+.quantity-control button {
+    flex-shrink: 0;
+    width: 35px; /* Reduced button size slightly */
+    height: 35px; /* Reduced button size slightly */
+    padding: 0;
+    border: none;
+    background-color: #f0f0f0;
+    color: #333;
+    font-size: 1.3em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    margin-top: 0;
+    border-radius: 0;
+}
+
+.quantity-control button:hover:not(:disabled) {
+    background-color: #e0e0e0;
+    color: #007bff;
+}
+
+.quantity-control button:disabled {
+    background-color: #f8f8f8;
+    color: #ccc;
+    cursor: not-allowed;
+}
+
+.quantity-control span {
+    flex-grow: 1;
+    text-align: center;
+    padding: 0 8px;
+    font-size: 1em;
+    min-width: 30px;
+    color: #333;
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    padding: 8px 15px; /* Reduced padding */
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s ease;
+    margin-top: 15px; /* Reduced margin */
+}
+
+button:hover:not(:disabled) {
+    background-color: #0056b3;
+}
+
+button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+.error-message {
+    color: red;
+    background-color: #ffe6e6;
+    border: 1px solid red;
+    padding: 5px; /* Reduced padding */
+    border-radius: 4px;
+    margin-top: 10px;
+    font-size: 0.9em;
+    text-align: center;
+}
+
+.image-gallery {
+    margin-top: 5px; /* Reduced margin */
+}
+
+.image-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 10px; /* Reduced gap */
+    justify-items: center;
+}
+
+.image-item {
+    border: 1px solid #ddd;
+    padding: 5px; /* Reduced padding */
+    border-radius: 6px;
+    background-color: #f9f9f9;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    text-align: center;
+    max-width: 100%;
+}
+
+.image-item img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 3px;
+    display: block;
+    margin: 0 auto;
+}
+
+.no-images-message {
+    text-align: center;
+    color: #666;
+    font-style: italic;
+    margin-top: 20px; /* Reduced margin */
+    padding: 15px;
+    border: 1px dashed #ccc;
+    border-radius: 8px;
+    background-color: #f0f0f0;
+    font-size: 0.95em;
+}
+
+.loading-message {
+    text-align: center;
+    color: #007bff;
+    font-style: italic;
+    margin-top: 20px; /* Reduced margin */
+    padding: 15px;
+    border: 1px dashed #a8d9ff;
+    border-radius: 8px;
+    background-color: #e0f2ff;
+    font-size: 0.95em;
+}
+
+.saved-designs-section {
+    margin-top: 30px; /* Reduced margin */
+    padding-top: 15px; /* Reduced padding */
+    border-top: 1px solid #ccc;
+}
+
+.saved-designs-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Reduced gap */
+}
+
+.saved-design-folder {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 10px; /* Reduced padding */
+    background-color: #fdfdfd;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.saved-prompt-text {
+    font-style: italic;
+    color: #666;
+    margin-bottom: 8px; /* Reduced margin */
+    font-size: 0.9em;
+    word-wrap: break-word;
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 800px) {
+    body {
+        padding: 8px; /* Reduced padding */
+    }
+    .container {
+        padding: 15px; /* Reduced padding */
+    }
+    .main-content {
+        gap: 15px; /* Reduced gap */
+    }
+    .left-panel, .right-panel {
+        padding: 10px; /* Reduced padding */
+    }
+    .dropdowns-row, .model-size-row {
+        gap: 8px; /* Reduced gap */
+    }
+    .image-grid {
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); /* Adjusted min-width for very small screens */
+    }
+}

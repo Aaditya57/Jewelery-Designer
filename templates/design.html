@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="jewelryApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Jewelry Designer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+        <style>
+    .dropdowns-row{
+     display: flex;
+    gap: 20px; /* space between form groups */
+    align-items: center;
+    flex-wrap: wrap; /* allows wrapping on smaller screens */
+    }       
+
+    .form-group {
+        display: flex;
+        align-items: center;
+    }
+
+    .form-group label {
+        width: 150px; /* Adjust width as needed */
+        margin-right: 10px;
+        text-align: left;
+        font-weight: bold;
+    }
+
+    .form-group select {
+        flex: 1;
+        padding: 5px;
+    }
+
+    </style>
+</head>
+<body ng-controller="JewelryController as vm">
+
+    <div class="container">
+        <div class="main-content">
+            <div class="left-panel">
+                <h2>Design Your Custom Jewelry - Configure Your Design</h2>
+                {% raw %} 
+                <div class="model-size-row">
+                    <div class="form-group">
+                        <label for="model">AI Model:</label>
+                        <select id="model" ng-model="vm.design.model">
+                            <option value="5c232a9e-9061-4777-980a-ddc8e65647c6">Leonardo Diffusion</option>
+                            <option value="b2614463-296c-462a-9586-aafdb8f00e36">Alchemy (SDXL)</option>
+                            <option value="28aeddf8-bd19-4803-80fc-79602d1a9989">PhotoReal</option>
+                            <option value="05ce0082-2d80-4a2d-8653-4d1c85e2418e">DreamShaper</option>
+                            <option value="de7d3faf-762f-48e0-b3b7-9d0ac3a3fcf3">Absolute Reality</option>
+                            <option value="together-flux1.dev">Together-black-forest-labs/FLUX.1-dev</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Number of Images:</label>
+                        <div class="quantity-control">
+                            <button ng-click="vm.decrementImages()" ng-disabled="vm.design.numImages <= 1">-</button>
+                            <span>{{ vm.design.numImages }}</span>
+                            <button ng-click="vm.incrementImages()" ng-disabled="vm.design.numImages >= 8">+</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="description">Further Description :</label>
+                    <textarea id="description" ng-model="vm.design.description" rows="4" placeholder="Enter additional details..."></textarea>
+                </div>
+                <div class="dropdowns-row">
+                    <div class="form-group enhance-prompt-checkbox"> 
+                        <label for="enhancePrompt">Enhance Prompt with AI</label> 
+                        <input type="checkbox" id="enhancePrompt" ng-model="vm.design.enhancePrompt">
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Challenge :</label>
+                        <input type="text" id="challenge" ng-model="vm.design.challenge" placeholder="Enter challenge passphrase..."></input>
+                    </div>
+                </div>
+                <button ng-click="vm.generateImages()" ng-disabled="vm.isLoading">
+                    <span ng-if="!vm.isLoading">Generate Images</span>
+                    <span ng-if="vm.isLoading">Generating... Please wait</span>
+                </button>
+
+                <div ng-if="vm.errorMessage" class="error-message">
+                    {{ vm.errorMessage }}
+                </div>
+                {% endraw %}
+            </div> <div class="right-panel">
+                <h2>Current Generation:</h2>
+                <div class="image-gallery" ng-if="vm.images.length > 0">
+                    <div class="image-grid">
+                        {% raw %}
+                        <div class="image-item" ng-repeat="image in vm.images track by $index">
+                            <img ng-src="{{ image }}" alt="Generated Jewelry Design {{ $index + 1 }}">
+                        </div>
+                        {% endraw %}
+                    </div>
+                </div>
+                <div ng-if="vm.images.length === 0 && !vm.isLoading" class="no-images-message">
+                    Your newly generated designs will appear here.
+                </div>
+                <div ng-if="vm.isLoading" class="loading-message">
+                    Generating... Please wait.
+                </div>
+            </div> </div> <div class="saved-designs-section">
+            <div class="header-line"></div>
+            <h2>Previously Generated Designs:</h2>
+            <div ng-if="vm.savedDesigns.length === 0" class="no-images-message">
+                No previous designs found. Generate some!
+            </div>
+            <div class="saved-designs-grid">
+                {% raw %}
+                <div class="saved-design-folder" ng-repeat="design in vm.savedDesigns">
+                    <h3>Prompt:</h3>
+                    <p class="saved-prompt-text">{{ design.prompt }}</p>
+                    <div class="image-grid">
+                        <div class="image-item" ng-repeat="image in design.images track by $index">
+                            <img ng-src="{{ image }}" alt="Saved Design Image {{ $index + 1 }}">
+                        </div>
+                    </div>
+                </div>
+                {% endraw %}
+            </div>
+        </div>
+
+    </div> 
+
+</body>
+</html>
