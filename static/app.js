@@ -1,4 +1,10 @@
 angular.module('jewelryApp', [])
+.filter('capitalizeFirst', function() {
+    return function(input) {
+        if (!input) return '';
+        return input.charAt(0).toUpperCase() + input.slice(1).toLowerCase();
+    };
+})
 .controller('JewelryController', ['$http', function($http) {
     var vm = this; // ViewModel pattern
     vm.design = {
@@ -10,7 +16,8 @@ angular.module('jewelryApp', [])
         numImages: 1, // Default number of images
         model: '5c232a9e-9061-4777-980a-ddc8e65647c6', // Default model
         enhancePrompt: false, // NEW: Default to true (checked)
-        challenge: '' // NEW: Field for challenge passphrase
+        challenge: '', // NEW: Field for challenge passphrase
+        product_style: '' // NEW: Field for product style
     };
     vm.images = []; // Images from current generation
     vm.isLoading = false;
@@ -44,7 +51,7 @@ angular.module('jewelryApp', [])
         vm.images = []; // Clear previous images
 
         // Basic validation (optional, can be more robust)
-        if (!vm.design.jewelry_type && !vm.design.metal_type && !vm.design.stone_type && !vm.design.description) {
+        if (!vm.design.jewelry_type && !vm.design.metal_type && !vm.design.stone_type && !vm.design.product_style && !vm.design.description) {
             vm.errorMessage = "Please select at least one option or provide a description.";
             vm.isLoading = false;
             return;
@@ -97,17 +104,19 @@ angular.module('jewelryApp', [])
         ],
         pendant: [
             'Chain', 'Curb & Cuban', 'Fancy', 'Floral', 'Halo', 'Locket', 'Multi Layered',
-            'Paper Clip', 'Teardrop', 'Religious', 'Alphabets', 'Charm'
+            'Paper Clip', 'Teardrop', 'Religious', 'Alphabets', 'Charm', 'Solitaire'
         ],
         bracelet: [
             'Chain', 'Curb & Cuban', 'Floral', 'Gemstone Accent', 'Halo', 'Lariat', 'Link',
-            'Paper Clip', 'Tennis', 'Mixed Stones'
+            'Paper Clip', 'Tennis', 'Mixed Stones', 'Bangle', 'Cuff'
+        ],
+        necklaces: [
+            'Station', 'Lariat', 'Y-Necklace', 'Chokar', 'Bib Necklace', 'Collar Necklace',
+            'Tennis Necklace', 'Torque Necklace', 'Bar Necklace', 'Multi Strand Necklace', 'Nameplate Necklace'
         ]
     };
 
 vm.design.dynamicOption = '';
-
-
 
     // --- END NEW: Function to fetch saved designs ---
 }]);

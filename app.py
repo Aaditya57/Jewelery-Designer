@@ -139,6 +139,8 @@ def generate_jewelry():
     side_stone_cut = data.get('side_stone_cut')
     gender = data.get('gender')
     description = data.get('description', '')
+    product_style = data.get('product_style', '')  # NEW: Get product style
+    setting_type = data.get('setting_type', '')  # NEW: Get setting type
     selected_model_id = data.get('model', '5c232a9e-9061-4777-980a-ddc8e65647c6') # Default model
     num_images = data.get('numImages', 1)
     enhance_prompt = data.get('enhancePrompt', False) # NEW: Get checkbox state
@@ -150,42 +152,32 @@ def generate_jewelry():
         return jsonify({"error": "You are not authorized to use this, please contact info@livepointsolutions.com."}), 403 # 403 Forbidden
     # --- END CORRECTED ---
     # Construct initial prompt
-    prompt_parts = []
-    if gender:
-        prompt_parts.append(f"{gender}'s")
-    if metal_type:
-        prompt_parts.append(metal_type)
-    if jewelry_option:
-        prompt_parts.append(jewelry_option)
-    if jewelry_type:
-        prompt_parts.append(jewelry_type)
-    if center_stone_type:
-        prompt_parts.append(f"with center stone {center_stone_type}")
-    if center_stone_shape:
-        prompt_parts.append(f"and center stone shape {center_stone_shape}")
-    if center_stone_cut:
-        prompt_parts.append(f"and center stone cut {center_stone_cut}")
-    if side_stone_type:
-        prompt_parts.append(f"and side stones {side_stone_type}")
-    if side_stone_shape:
-        prompt_parts.append(f"and side stone shape {side_stone_shape}")
-    if side_stone_cut:
-        prompt_parts.append(f"and side stone cut {side_stone_cut}")
-    if description:
-        prompt_parts.append(f"details: {description}")
-    # Combine parts for the base prompt
-    initial_prompt_for_gemini = f"{' '.join(prompt_parts)}. The images should be realistic, detailed, and suitable for a jewelry catalog."
+    if jewelry_type == 'ring':
+        initial_prompt_for_gemini = f"A high-resolution, ultra-detailed, sharp focus, hyper-realistic jewelry for {gender} rendering of a {jewelry_option} ring, crafted from {metal_type}, featuring a {center_stone_cut} {center_stone_shape} {center_stone_type} center stone, in a {setting_type} setting, with a {side_stone_cut} {side_stone_shape} {side_stone_type} side stones, in a {product_style or '[Product Style]'} style. Photographed in top-down, macro close-up, 3/4 perspective, and side profile displayed on mirrored surface, under softbox studio light, featuring {description or '[Comments]'} --ar 1:1 --v 6 --style raw."
 
-    # --- NEW: Enhance prompt with Gemini ---
-   # --- Conditional Prompt Enhancement ---
-    if enhance_prompt: # Only enhance if checkbox is checked
-        final_prompt_for_image_gen = enhance_prompt_with_gemini(prompt_parts)
+    elif jewelry_type == 'earring':
+        initial_prompt_for_gemini = f"A high-resolution, ultra-detailed, sharp focus, hyper-realistic jewelry for {gender} rendering of a {jewelry_option} pair of earrings, crafted from {metal_type}, featuring a mix of {center_stone_cut} {center_stone_shape} {center_stone_type} and {side_stone_cut} {side_stone_shape} {side_stone_type}, in a {setting_type} setting, in a {product_style or '[Product Style]'} style. Photographed in top-down, macro close-up, 3/4 perspective, and side profile displayed on mirrored surface, under softbox studio light, featuring {description or '[Comments]'} --ar 1:1 --v 6 --style raw."
+
+    elif jewelry_type == 'pendant':
+        initial_prompt_for_gemini = f"A high-resolution, ultra-detailed, sharp focus, hyper-realistic jewelry for {gender} rendering of a {jewelry_option} pendant, crafted from {metal_type}, featuring a mix of {center_stone_cut} {center_stone_shape} {center_stone_type} and {side_stone_cut} {side_stone_shape} {side_stone_type}, in a {setting_type} setting, in a {product_style or '[Product Style]'} style. Photographed in top-down, macro close-up, 3/4 perspective, and side profile displayed on mirrored surface, under softbox studio light, featuring {description or '[Comments]'} --ar 1:1 --v 6 --style raw."
+
+    elif jewelry_type == 'necklace':
+        initial_prompt_for_gemini = f"A high-resolution, ultra-detailed, sharp focus, hyper-realistic jewelry for {gender} rendering of a {jewelry_option} necklace, crafted from {metal_type}, featuring a mix of {center_stone_cut} {center_stone_shape} {center_stone_type} and {side_stone_cut} {side_stone_shape} {side_stone_type}, in a {setting_type} setting, in a {product_style or '[Product Style]'} style. Photographed in top-down, macro close-up, 3/4 perspective, and side profile displayed on mirrored surface, under softbox studio light, featuring {description or '[Comments]'} --ar 1:1 --v 6 --style raw."
+
+    elif jewelry_type == 'bracelet':
+        initial_prompt_for_gemini = f"A high-resolution, ultra-detailed, sharp focus, hyper-realistic jewelry for {gender} rendering of a {jewelry_option} bracelet, crafted from {metal_type}, featuring a mix of {center_stone_cut} {center_stone_shape} {center_stone_type} and {side_stone_cut} {side_stone_shape} {side_stone_type}, in a {setting_type} setting, in a {product_style or '[Product Style]'} style. Photographed in top-down, macro close-up, 3/4 perspective, and side profile displayed on mirrored surface, under softbox studio light, featuring {description or '[Comments]'} --ar 1:1 --v 6 --style raw."
+
     else:
-        final_prompt_for_image_gen = initial_prompt_for_gemini # Use original prompt
+        initial_prompt_for_gemini = "The images should be realistic, detailed, and suitable for a jewelry catalog."
+
+    # Enhance prompt with Gemini if enabled
+    if enhance_prompt:  # Only enhance if checkbox is checked
+        final_prompt_for_image_gen = enhance_prompt_with_gemini(initial_prompt_for_gemini)
+    else:
+        final_prompt_for_image_gen = initial_prompt_for_gemini  # Use original prompt
 
     app.logger.info(f"Final prompt for image generation (enhanced: {enhance_prompt}): {final_prompt_for_image_gen}")
     # --- END Conditional Prompt Enhancement ---
-    # --- END NEW ---
 
     leonardo_image_urls = []
     together_image_urls = []

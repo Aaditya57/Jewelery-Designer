@@ -49,12 +49,13 @@
                             <option value="bracelet">Bracelet</option>
                             <option value="pendant">Pendant</option>
                             <option value="earring">Earring</option>
+                            <option value="necklace">Necklace</option>
                         </select>
                     </div>
 
 
                     <div class="form-group" ng-if="vm.design.jewelry_type">
-                        <label>{{ vm.design.jewelry_type | uppercase }} Options:</label>
+                        <label>{{ vm.design.jewelry_type | capitalizeFirst }} Options:</label>
                         <select ng-model="vm.design.jewelry_option">
                             <option ng-repeat="option in vm.dynamicOptions[vm.design.jewelry_type]" value="{{option}}">
                                 {{option}}
@@ -71,13 +72,56 @@
                             <option value="rose gold">Rose Gold</option>
                             <option value="platinum">Platinum</option>
                             <option value="silver">Silver</option>
-                            <option value="two tone">Two Tone</option>
+                            <option value="two tone gold">Two Tone Gold</option>
+                            <option value="rose and white gold">Rose and White Gold</option>
+                            <option value="yellow and white gold">Yellow and White Gold</option>
                         </select>
                     </div>
                 </div>
+                <div class="dropdowns-row:">
+                    <div class="form-group">
+                        <label for="Product style">Product Style:</label>
+                        <select id="productStyle" ng-model="vm.design.product_style">
+                            <option value="">-- Select --</option>
+                            <option value="bridal">Bridal</option>
+                            <option value="fashion">Fashion</option>
+                            <option value="classic">Classic</option>
+                            <option value="vintage">Vintage</option>
+                            <option value="minimalist">Minimalist</option>
+                            <option value="modern">Modern</option>
+                            <option value="art_deco">Art Deco</option>
+                            <option value="bohemian">Bohemian</option>
+                            <option value="luxury">Luxury</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="settingType">Setting Type:</label>
+                        <select id="settingType" ng-model="vm.design.setting_type">
+                            <option value="">-- Select --</option>
+                            <option value="prong">Prong</option>
+                            <option value="bezel">Bezel</option>
+                            <option value="pave">Pave</option>
+                            <option value="channel">Channel</option>
+                            <option value="bar">Bar</option>
+                            <option value="tension">Tension</option>
+                            <option value="invisible">Invisible</option>
+                            <option value="halo">Halo</option>
+                            <option value="cluster">Cluster</option>
+                            <option value="illusion">Illusion</option>
+                            <option value="micro_pave">Micro Pave</option>
+                            <option value="bead">Bead</option>
+                            <option value="shared_prong">Shared Prong</option>
+                            <option value="v_prong">V-Prong</option>
+                        </select>
+                    </div>
+                </div>
+
+
+
+
                 <div class="dropdowns-row">
                     <div class="form-group">
-                        <label for="centerStoneType">Center Stone:</label>
+                        <label for="centerStoneType">{{ vm.design.jewelry_type !== 'ring' ? 'Stone 1' : 'Center Stone' }}:</label>
                         <select id="centerStoneType" ng-model="vm.design.center_stone_type">
                             <option value="">-- Select --</option>
                             <option value="diamond">Diamond</option>
@@ -105,7 +149,7 @@
                     </div>
                         
                     <div class="form-group">
-                        <label for="centerStoneShape">Center Stone Shape:</label>
+                        <label for="centerStoneShape">{{ vm.design.jewelry_type !== 'ring' ? 'Stone 1 Shape' : 'Center Stone Shape' }}:</label>
                         <select id="centerStoneShape" ng-model="vm.design.center_stone_shape">
                             <option value="">-- Select --</option>
                             <option value="asscher">Asscher</option>
@@ -127,7 +171,7 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="centerStoneCut">Center Stones Cut:</label>
+                        <label for="centerStoneCut">{{ vm.design.jewelry_type !== 'ring' ? 'Stone 1 Cut' : 'Center Stone Cut' }}:</label>
                         <select id="centerStoneCut" ng-model="vm.design.center_stone_cut">
                             <option value="">-- Select --</option>
                             <option value="cushion">Cushion</option>
@@ -145,7 +189,7 @@
                 </div>
                 <div class="dropdowns-row">
                     <div class="form-group">
-                        <label for="sideStoneType">Side Stone Type:</label>
+                        <label for="sideStoneType">{{ vm.design.jewelry_type !== 'ring' ? 'Stone 2' : 'Side Stone Type' }}:</label>
                         <select id="sideStoneType" ng-model="vm.design.side_stone_type">
                             <option value="">-- Select --</option>
                             <option value="diamond">Diamond</option>
@@ -172,7 +216,7 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="sideStoneShape">Side Stone Shape:</label>
+                        <label for="sideStoneShape">{{ vm.design.jewelry_type !== 'ring' ? 'Stone 2 Shape' : 'Side Stone Shape' }}:</label>
                         <select id="sideStoneShape" ng-model="vm.design.side_stone_shape">
                             <option value="">-- Select --</option>
                             <option value="asscher">Asscher</option>
@@ -194,8 +238,8 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="sideStoneCount">Side Stone Cut:</label>
-                        <select id="sideStoneCount" ng-model="vm.design.side_stone_count">
+                        <label for="sideStoneCut">{{ vm.design.jewelry_type !== 'ring' ? 'Stone 2 Cut' : 'Side Stone Cut' }}:</label>
+                        <select id="sideStoneCut" ng-model="vm.design.side_stone_cut">
                             <option value="">-- Select --</option>
                             <option value="cushion">Cushion</option>
                             <option value="emerald">Emerald</option>
