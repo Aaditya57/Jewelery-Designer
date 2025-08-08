@@ -141,7 +141,7 @@ def generate_jewelry():
     description = data.get('description', '')
     product_style = data.get('product_style', '')  # NEW: Get product style
     setting_type = data.get('setting_type', '')  # NEW: Get setting type
-    selected_model_id = data.get('model', '5c232a9e-9061-4777-980a-ddc8e65647c6') # Default model
+    selected_model_id = data.get('model', 'together-flux1.dev') # Default model is Together-black-forest-labs/FLUX.1-dev
     num_images = data.get('numImages', 1)
     enhance_prompt = data.get('enhancePrompt', False) # NEW: Get checkbox state
     challenge_input = data.get('challenge', '') # NEW: Get challenge passphrase
@@ -245,6 +245,9 @@ def generate_jewelry():
             return jsonify({"error": "An internal server error occurred during Together.ai call."}), 500
 
     else: # Leonardo.ai
+        if selected_model_id == '5c232a9e-9061-4777-980a-ddc8e65647c6':
+            return jsonify({"error": "The Leonardo base model is no longer available. Please select another model."}), 400
+
         if not (1 <= num_images <= 8):
             app.logger.warning(f"Invalid num_images received for Leonardo.ai: {num_images}. Defaulting to 4.")
             num_images = 4
