@@ -253,7 +253,7 @@ def generate_jewelry():
             num_images = 4
 
         headers = {
-            "Authorization": f"Bearer {LEONARDO_API_KEY}",
+            "authorization": f"Bearer {LEONARDO_API_KEY}",
             "Content-Type": "application/json"
         }
 

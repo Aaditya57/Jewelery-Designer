@@ -17,12 +17,27 @@ angular.module('jewelryApp', [])
         model: '5c232a9e-9061-4777-980a-ddc8e65647c6', // Default model
         enhancePrompt: false, // NEW: Default to true (checked)
         challenge: '', // NEW: Field for challenge passphrase
-        product_style: '' // NEW: Field for product style
+        product_style: '', // NEW: Field for product style
+        setting_type: '' // NEW: Field for setting type
     };
     vm.images = []; // Images from current generation
     vm.isLoading = false;
     vm.errorMessage = '';
     vm.savedDesigns = []; // NEW: Array to hold previously saved designs
+
+    vm.isCommentsMode = false; // NEW: Track input mode
+
+    vm.toggleInputMode = function() {
+        vm.isCommentsMode = !vm.isCommentsMode;
+
+        // Clear the values of the inactive mode
+        if (vm.isCommentsMode) {
+            vm.design.product_style = '';
+            vm.design.setting_type = '';
+        } else {
+            vm.design.description = '';
+        }
+    };
 
     // --- NEW: Increment/Decrement functions for the counter ---
     vm.incrementImages = function() {
@@ -38,7 +53,7 @@ angular.module('jewelryApp', [])
     };
     // --- END NEW FUNCTIONS ---
     vm.generateImagesDesgin = function() {
-        jewelry_type =''
+        jewelry_type = ''
         metal_type = ''
         stone_type = ''
         gender = ''
@@ -51,8 +66,8 @@ angular.module('jewelryApp', [])
         vm.images = []; // Clear previous images
 
         // Basic validation (optional, can be more robust)
-        if (!vm.design.jewelry_type && !vm.design.metal_type && !vm.design.stone_type && !vm.design.product_style && !vm.design.description) {
-            vm.errorMessage = "Please select at least one option or provide a description.";
+        if (!vm.design.jewelry_type || (!vm.isCommentsMode && (!vm.design.product_style || !vm.design.setting_type)) || (vm.isCommentsMode && !vm.design.description)) {
+            vm.errorMessage = "Please select or provide input for the design.";
             vm.isLoading = false;
             return;
         }
@@ -88,7 +103,7 @@ angular.module('jewelryApp', [])
             });
     };
 
-        // Initial fetch of saved designs when the page loads
+    // Initial fetch of saved designs when the page loads
     vm.fetchSavedDesigns();
 
     vm.dynamicOptions = {
@@ -110,13 +125,13 @@ angular.module('jewelryApp', [])
             'Chain', 'Curb & Cuban', 'Floral', 'Gemstone Accent', 'Halo', 'Lariat', 'Link',
             'Paper Clip', 'Tennis', 'Mixed Stones', 'Bangle', 'Cuff'
         ],
-        necklaces: [
+        necklace: [
             'Station', 'Lariat', 'Y-Necklace', 'Chokar', 'Bib Necklace', 'Collar Necklace',
             'Tennis Necklace', 'Torque Necklace', 'Bar Necklace', 'Multi Strand Necklace', 'Nameplate Necklace'
         ]
     };
 
-vm.design.dynamicOption = '';
+    vm.design.dynamicOption = '';
 
     // --- END NEW: Function to fetch saved designs ---
 }]);
